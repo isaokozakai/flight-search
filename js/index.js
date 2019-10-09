@@ -1,4 +1,4 @@
 $(function () {
-  $("#departureDate").datepicker();
-  $("#returnDate").datepicker();
+  $("#departure-date").datepicker();
+  $("#return-date").datepicker();
 });
