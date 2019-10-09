@@ -8,8 +8,8 @@
   display: flex;
 }
 
-#input-form p {
-  margin: 0;
+#input-form label {
+  display: block;
 }
 
 #serch-button {
