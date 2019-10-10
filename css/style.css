@@ -4,15 +4,29 @@
   margin: 40px 60px;
 }
 
-#input-form {
+#inputForm {
   display: flex;
 }
 
-#input-form label {
+#inputForm div {
+  width: 150px;
+}
+
+#inputForm label {
   display: block;
 }
 
-#serch-button {
+#inputForm input {
+  width: 140px;
+}
+
+.ui-autocomplete{
+	max-height: 200px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+#serchButton {
   height: 50%;
   margin: auto 0 0 0;
   justify-self: left; 

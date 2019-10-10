@@ -10,7 +10,6 @@
 
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.js"></script>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/index.js"></script>
@@ -19,25 +18,36 @@
 
 <body>
   <div class="container">
-    <form id="input-form">
+    <form id="inputForm">
       <div>
         <label>from</label>
-        <input type="text" id="from">
+        <input type="text" id="from" name="from">
       </div>
       <div>
         <label>to</label>
-        <input type="text" id="to">
+        <input type="text" name="to" id="to">
       </div>
       <div>
         <label>departure date</label>
-        <input type="text" id="departure-date">
+        <input type="text" name="currency" id="departureDate">
       </div>
       <div>
         <label>return date</label>
-        <input type="text" id="return-date">
+        <input type="text" name="currency" id="returnDate">
       </div>
-      <input type="submit" id="serch-button" value="search">
+      <div>
+        <label>country</label>
+        <input type="text" name="country" id="country">
+      </div>
+      <div>
+        <label>currency</label>
+        <input type="text" name="currency" id="currency">
+      </div>
+      <button id="serchButton">search</button>
     </form>
+  </div>
+  <div class="container">
+    <div id="result"></div>
   </div>
 </body>
 
