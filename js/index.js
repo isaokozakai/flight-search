@@ -146,9 +146,9 @@ $(() => {
               $(".leg-content").last().append(
                 $("<div></div>")
                   .text(`
-                    ${outboundInfo[i].carrier.Name}  
-                    ${outboundInfo[i].departureDateTime}  ${outboundInfo[i].originCode}  ⇒  
-                    ${outboundInfo[i].arrivalDateTime}  ${outboundInfo[i].destinationCode}
+                    ${outboundInfo[i].carrier.Name} 
+                    ${outboundInfo[i].departureDateTime} ${outboundInfo[i].originCode} ⇒ 
+                    ${outboundInfo[i].arrivalDateTime} ${outboundInfo[i].destinationCode} 
                   `).addClass("segment"));
             }
 
@@ -160,9 +160,9 @@ $(() => {
               $(".leg-content").last().append(
                 $("<div></div>")
                   .text(`
-                    ${inboundInfo[i].carrier.Name}  
-                    ${inboundInfo[i].departureDateTime}  ${inboundInfo[i].originCode}  ⇒  
-                    ${inboundInfo[i].arrivalDateTime}  ${inboundInfo[i].destinationCode}
+                    ${inboundInfo[i].carrier.Name} 
+                    ${inboundInfo[i].departureDateTime} ${inboundInfo[i].originCode} ⇒ 
+                    ${inboundInfo[i].arrivalDateTime} ${inboundInfo[i].destinationCode} 
                   `).addClass("segment"));
             }
           });
