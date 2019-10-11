@@ -1,6 +1,7 @@
 $(() => {
   $("#departureDate").datepicker();
   $("#returnDate").datepicker();
+
   $("#from, #to").autocomplete({
     maxShowItems: 5,
     source: (req, res) => {
@@ -28,7 +29,6 @@ $(() => {
       $(this).attr('code', ui.item.code);
     }
   });
-
 
   $("#inputForm").submit((e) => {
     e.preventDefault();
