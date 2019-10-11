@@ -10,7 +10,8 @@
 
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.js"></script>
   <link rel="stylesheet" href="css/style.css">
   <script src="js/index.js"></script>
   <title>Flight Search</title>
@@ -25,23 +26,56 @@
   <main>
     <div class="container">
       <form id="inputForm" autocomplete="off">
-        <div class="airport">
+        <div class="input-item-container airport">
           <label>from</label>
           <input type="text" id="from" name="from">
         </div>
-        <div class="airport">
+        <div class="input-item-container airport">
           <label>to</label>
           <input type="text" name="to" id="to">
         </div>
-        <div class="date">
+        <div class="input-item-container date">
           <label>departure date</label>
-          <input type="text" name="currency" id="departureDate">
+          <input type="text" name="departureDate" id="departureDate">
         </div>
-        <div class="date">
+        <div class="input-item-container date">
           <label>return date</label>
-          <input type="text" name="currency" id="returnDate">
+          <input type="text" name="returnDate" id="returnDate">
         </div>
-        <button id="serchButton">search</button>
+        <div class="input-item-container cabinClass">
+          <label>cabin class</label>
+          <select name="cabinClass">
+            <option value="economy">Economy</option>
+            <option value="premiumeconomy">Premium Economy</option>
+            <option value="business">Business Class</option>
+            <option value="first">First Class</option>
+          </select>
+        </div>
+        <div class="input-item-container travelers">
+          <label>adults</label>
+          <div class="number-selection">
+            <div class="minus-button">-</div>
+            <input type="text" name="adults" id="adults" value="1">
+            <div class="plus-button" type="click">+</div>
+          </div>
+        </div>
+        <div class="input-item-container travelers">
+          <label>children</label>
+          <div class="number-selection">
+            <div class="minus-button">-</div>
+            <input type="text" name="children" id="children" value="0">
+            <div class="plus-button" type="click">+</div>
+          </div>
+        </div>
+        <div class="input-item-container travelers">
+          <label>infants</label>
+          <div class="number-selection">
+            <div class="minus-button">-</div>
+            <input type="text" name="infants" id="infants" value="0">
+            <div class="plus-button" type="click">+</div>
+          </div>
+        </div>
+        <button id="serchButton" type="submit">search</button>
       </form>
     </div>
     <div class="container">

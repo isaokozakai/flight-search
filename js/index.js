@@ -30,10 +30,24 @@ $(() => {
     }
   });
 
+  $(".minus-button").click(function (e) {
+    const $inputElement = $(this).next();
+    const value = parseInt($inputElement.val());
+    if (value == 0) return;
+    $inputElement.val(value - 1);
+  });
+
+  $(".plus-button").click(function (e) {
+    const $inputElement = $(this).prev();
+    const value = parseInt($inputElement.val());
+    if (value == 8) return;
+    $inputElement.val(value + 1);
+  });
+
   $("#inputForm").submit((e) => {
     e.preventDefault();
     $("#result").empty();
-    const [from, to, departureDate, returnDate] = e.target.elements;
+    const [from, to, departureDate, returnDate, cabinClass, adults, children, infant] = e.target.elements;
     const originPlace = $(from)[0].attributes.code.value;
     const destinationPlace = $(to)[0].attributes.code.value;
     const outboundDate = $.datepicker.formatDate("yy-mm-dd", new Date(departureDate.value));
@@ -142,7 +156,7 @@ $(() => {
             $(".leg").last().append($("<div></div>").text("Outbound").addClass("directionality"));
             $(".leg").last().append($("<div></div>").addClass("leg-content"));
 
-            for (let i = 0; i < outboundInfo.length; i++) {              
+            for (let i = 0; i < outboundInfo.length; i++) {
               $(".leg-content").last().append(
                 $("<div></div>")
                   .text(`
@@ -156,7 +170,7 @@ $(() => {
             $(".leg").last().append($("<div></div>").text("Inbound").addClass("directionality"));
             $(".leg").last().append($("<div></div>").addClass("leg-content"));
 
-            for (let i = 0; i < inboundInfo.length; i++) {              
+            for (let i = 0; i < inboundInfo.length; i++) {
               $(".leg-content").last().append(
                 $("<div></div>")
                   .text(`
