@@ -3,27 +3,46 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .container {
-  margin: 20px 60px;
+  padding: 20px 60px;
   max-width: 100vw;
+}
+
+header {
+  color: white;
+  background-color: brown;
+}
+
+header h1 {
+  margin: 0;
 }
 
 #inputForm {
   display: flex;
 }
 
-#inputForm div {
+#inputForm .airport {
+  width: 250px;
+}
+
+#inputForm .airport input {
+  width: 240px;
+}
+
+
+#inputForm .date {
   width: 150px;
+}
+
+#inputForm .date input {
+  width: 140px;
 }
 
 #inputForm label {
   display: block;
-}
-
-#inputForm input {
-  width: 140px;
 }
 
 .ui-autocomplete{
