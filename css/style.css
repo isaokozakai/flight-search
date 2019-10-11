@@ -24,7 +24,7 @@ main {
   padding-top: 10px;
 }
 
-main .container {
+main .container:first-child {
   padding: 20px auto 20px 0;
   max-width: 80vw;
 }
