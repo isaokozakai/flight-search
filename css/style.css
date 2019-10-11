@@ -1,7 +1,13 @@
-.container {
-  height: 100%;
+body {
+  margin: 0;
+  padding: 0;
   width: 100%;
-  margin: 40px 60px;
+  height: 100%;
+}
+
+.container {
+  margin: 20px 60px;
+  max-width: 100vw;
 }
 
 #inputForm {
@@ -30,4 +36,11 @@
   height: 50%;
   margin: auto 0 0 0;
   justify-self: left; 
+}
+
+.itinerary {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: lightblue;
+  margin: 2px auto;
 }
