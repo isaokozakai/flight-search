@@ -20,16 +20,29 @@ header h1 {
   margin: 0;
 }
 
+main {
+  padding-top: 10px;
+}
+
 #inputForm {
   display: flex;
 }
 
+#inputForm input {
+  height: 30px;
+  font-size: 15px;
+  line-height: 30px;
+  border-radius: 3px;
+  border: 1px solid black;
+  text-indent: 7px;
+}
+
 #inputForm .airport {
-  width: 250px;
+  width: 280px;
 }
 
 #inputForm .airport input {
-  width: 240px;
+  width: 270px;
 }
 
 
@@ -52,14 +65,64 @@ header h1 {
 }
 
 #serchButton {
-  height: 50%;
+  height: 35px;
+  line-height: 35px;
+  background-color: #6c6c6c;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 0 10px;
+  text-decoration: none;
   margin: auto 0 0 0;
-  justify-self: left; 
+  justify-self: left;
+}
+
+#serchButton:hover {
+  background-color: #565656;
 }
 
 .itinerary {
+  background-color: cornflowerblue;
+  padding: 5px;
+  margin: 5px auto;
+  border-radius: 5px;
+}
+
+.itinerary .price {
+  border-radius: 3px;
+  padding: 0 10px;
+  width: 80px;
+  background-color: white;
+}
+
+.itinerary .leg {
+  display: flex;
+  height: 90px;
+}
+
+.itinerary .leg .directionality {
+  line-height: 80px;
+  border-radius: 3px;
+  margin: 5px 0;
+  padding: 0 10px;
+  width: 80px;
+  text-align: center;
+  background-color: white;
+}
+
+.itinerary .leg .leg-content {
   display: flex;
   flex-wrap: wrap;
-  background-color: lightblue;
-  margin: 2px auto;
+  border-radius: 3px;
+  margin: 5px;
+  padding: 10px;
+  width: 100%;
+  background-color: white;
+}
+
+.itinerary .leg .segment {
+  line-height: 30px;
 }

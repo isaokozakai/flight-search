@@ -92,15 +92,13 @@ $(() => {
             const minPrice = itinerary.PricingOptions[0].Price;
 
             const outboundLeg = response.Legs.find((leg) => leg.Id === itinerary.OutboundLegId);
-            const outboundSegments = outboundLeg.SegmentIds.map((segmentId) =>
-              response.Segments.find((segment) => segment.Id === segmentId)
-            );
-
-            const outboundInfo = outboundSegments.map((segment) => {
+            const outboundInfo = outboundLeg.SegmentIds.map((segmentId) => {
+              const segment = response.Segments.find((segment) => segment.Id === segmentId)
               const origin = response.Places.find((place) => place.Id === segment.OriginStation);
               const destination = response.Places.find((place) => place.Id === segment.DestinationStation);
               const carrier = response.Carriers.find((carrier) => carrier.Id === segment.Carrier);
               return ({
+                id: segmentId,
                 originId: origin.Id,
                 originCode: origin.Code,
                 originName: origin.Name,
@@ -116,15 +114,13 @@ $(() => {
             outboundInfo.sort((a, b) => a.departureDateTime < b.departureDateTime ? -1 : 1);
 
             const inboundLeg = response.Legs.find((leg) => leg.Id === itinerary.InboundLegId);
-            const inboundSegments = inboundLeg.SegmentIds.map((segmentId) =>
-              response.Segments.find((segment) => segment.Id === segmentId)
-            );
-
-            const inboundInfo = inboundSegments.map((segment) => {
+            const inboundInfo = inboundLeg.SegmentIds.map((segmentId) => {
+              const segment = response.Segments.find((segment) => segment.Id === segmentId)
               const origin = response.Places.find((place) => place.Id === segment.OriginStation);
               const destination = response.Places.find((place) => place.Id === segment.DestinationStation);
               const carrier = response.Carriers.find((carrier) => carrier.Id === segment.Carrier);
               return ({
+                id: segmentId,
                 originId: origin.Id,
                 originCode: origin.Code,
                 originName: origin.Name,
@@ -140,15 +136,34 @@ $(() => {
             inboundInfo.sort((a, b) => a.departureDateTime < b.departureDateTime ? -1 : 1);
 
             $("#result").append($("<div></div>").addClass("itinerary"));
-            $(".itinerary").last().append($("<div></div>").text(`${minPrice} USD `));
+            $(".itinerary").last().append($("<div></div>").text(`${minPrice} ${response.Query.Currency}`).addClass("price"));
 
-            for (let i = 0; i < outboundInfo.length; i++) {
-              $(".itinerary").last().append($("<div></div>")
-                .text(`
-                  ${outboundInfo[i].carrier.Name} 
-                  ${outboundInfo[i].departureDateTime}, ${outboundInfo[i].originCode},
-                  ${outboundInfo[i].arrivalDateTime}, ${outboundInfo[i].destinationCode}
-                `));
+            $(".itinerary").last().append($("<div></div>").addClass("leg"));
+            $(".leg").last().append($("<div></div>").text("Outbound").addClass("directionality"));
+            $(".leg").last().append($("<div></div>").addClass("leg-content"));
+
+            for (let i = 0; i < outboundInfo.length; i++) {              
+              $(".leg-content").last().append(
+                $("<div></div>")
+                  .text(`
+                    ${outboundInfo[i].carrier.Name}  
+                    ${outboundInfo[i].departureDateTime}  ${outboundInfo[i].originCode}  ⇒  
+                    ${outboundInfo[i].arrivalDateTime}  ${outboundInfo[i].destinationCode}
+                  `).addClass("segment"));
+            }
+
+            $(".itinerary").last().append($("<div></div>").addClass("leg"));
+            $(".leg").last().append($("<div></div>").text("Inbound").addClass("directionality"));
+            $(".leg").last().append($("<div></div>").addClass("leg-content"));
+
+            for (let i = 0; i < inboundInfo.length; i++) {              
+              $(".leg-content").last().append(
+                $("<div></div>")
+                  .text(`
+                    ${inboundInfo[i].carrier.Name}  
+                    ${inboundInfo[i].departureDateTime}  ${inboundInfo[i].originCode}  ⇒  
+                    ${inboundInfo[i].arrivalDateTime}  ${inboundInfo[i].destinationCode}
+                  `).addClass("segment"));
             }
           });
         }
