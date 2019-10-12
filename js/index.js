@@ -1,9 +1,8 @@
 $(() => {
   $("#departureDate").datepicker();
-  $("#returnDate").datepicker();
+  $("#arrivalDate").datepicker();
 
   $("#from, #to").autocomplete({
-    maxShowItems: 5,
     source: (req, res) => {
       $.ajax({
         "async": true,
@@ -30,14 +29,14 @@ $(() => {
     }
   });
 
-  $(".minus-button").click(function (e) {
+  $(".minus").click(function (e) {
     const $inputElement = $(this).next();
     const value = parseInt($inputElement.val());
     if (value == 0) return;
     $inputElement.val(value - 1);
   });
 
-  $(".plus-button").click(function (e) {
+  $(".plus").click(function (e) {
     const $inputElement = $(this).prev();
     const value = parseInt($inputElement.val());
     if (value == 8) return;
@@ -47,11 +46,15 @@ $(() => {
   $("#inputForm").submit((e) => {
     e.preventDefault();
     $("#result").empty();
-    const [from, to, departureDate, returnDate, cabinClass, adults, children, infant] = e.target.elements;
-    const originPlace = $(from)[0].attributes.code.value;
-    const destinationPlace = $(to)[0].attributes.code.value;
-    const outboundDate = $.datepicker.formatDate("yy-mm-dd", new Date(departureDate.value));
-    const inboundDate = $.datepicker.formatDate("yy-mm-dd", new Date(returnDate.value));
+    let [originPlace, destinationPlace, outboundDate, inboundDate, cabinClass, adults, children, infants] = e.target.elements;
+    originPlace = $(originPlace)[0].attributes.code.value;
+    destinationPlace = $(destinationPlace)[0].attributes.code.value;
+    outboundDate = $.datepicker.formatDate("yy-mm-dd", new Date(outboundDate.value));
+    inboundDate = $.datepicker.formatDate("yy-mm-dd", new Date(inboundDate.value));
+    cabinClass = cabinClass.value;
+    adults = adults.value.toString();
+    children = children.value.toString();
+    infants = infants.value.toString();
 
     const setting = {
       "async": true,
@@ -68,19 +71,23 @@ $(() => {
         originPlace,
         destinationPlace,
         outboundDate,
-        "cabinClass": "economy",
-        "children": "0",
-        "infants": "0",
+        cabinClass,
+        adults,
+        children,
+        infants,
         "country": "US",
         "currency": "USD",
-        "locale": "en-US",
-        "adults": "1"
+        "locale": "en-US"
       }
     };
 
     $.ajax(setting).done((response) => {
       console.log(response);
-    }).always((data, textStatus, jqXHR) => {
+    })
+    .fail((jqXHR, textStatus, errorThrown) => {
+      console.log(jqXHR, textStatus, errorThrown);
+    })
+    .always((data, textStatus, jqXHR) => {
       const sessionkey = jqXHR.getResponseHeader("location").slice(-36);
       const setting = {
         "async": true,
