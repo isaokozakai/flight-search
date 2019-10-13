@@ -83,11 +83,13 @@ $(() => {
 
     $.ajax(setting).done((response) => {
       console.log(response);
-    })
-    .fail((jqXHR, textStatus, errorThrown) => {
+
+    }).fail((jqXHR, textStatus, errorThrown) => {
       console.log(jqXHR, textStatus, errorThrown);
-    })
-    .always((data, textStatus, jqXHR) => {
+
+    }).always((data, textStatus, jqXHR) => {
+      console.log(data, textStatus, jqXHR);
+
       const sessionkey = jqXHR.getResponseHeader("location").slice(-36);
       const setting = {
         "async": true,
@@ -100,7 +102,8 @@ $(() => {
         },
         "data": {
           "sortType": "price",
-          "sortOrder": "asc"
+          "sortOrder": "asc",
+          "stops": "1"
         }
       };
 
@@ -164,13 +167,19 @@ $(() => {
             $(".leg").last().append($("<div></div>").addClass("leg-content"));
 
             for (let i = 0; i < outboundInfo.length; i++) {
-              $(".leg-content").last().append(
-                $("<div></div>")
-                  .text(`
-                    ${outboundInfo[i].carrier.Name} 
-                    ${outboundInfo[i].departureDateTime} ${outboundInfo[i].originCode} ⇒ 
-                    ${outboundInfo[i].arrivalDateTime} ${outboundInfo[i].destinationCode} 
-                  `).addClass("segment"));
+              $(".leg-content").last().append($("<div></div>").addClass("segment"));
+
+              $(".segment").last().append($("<img></img>").attr("src", outboundInfo[i].carrier.ImageUrl).addClass("carrier"));
+
+              $(".segment").last().append($("<div></div>").addClass("time-and-place"));
+              $(".time-and-place").last().append($("<div></div>").text(outboundInfo[i].departureDateTime));
+              $(".time-and-place").last().append($("<div></div>").text(outboundInfo[i].originCode));
+
+              $(".segment").last().append($("<i></i>").addClass("fas fa-angle-double-right rightward"));
+
+              $(".segment").last().append($("<div></div>").addClass("time-and-place"));
+              $(".time-and-place").last().append($("<div></div>").text(outboundInfo[i].arrivalDateTime));
+              $(".time-and-place").last().append($("<div></div>").text(outboundInfo[i].destinationCode));
             }
 
             $(".itinerary").last().append($("<div></div>").addClass("leg"));
@@ -178,13 +187,19 @@ $(() => {
             $(".leg").last().append($("<div></div>").addClass("leg-content"));
 
             for (let i = 0; i < inboundInfo.length; i++) {
-              $(".leg-content").last().append(
-                $("<div></div>")
-                  .text(`
-                    ${inboundInfo[i].carrier.Name} 
-                    ${inboundInfo[i].departureDateTime} ${inboundInfo[i].originCode} ⇒ 
-                    ${inboundInfo[i].arrivalDateTime} ${inboundInfo[i].destinationCode} 
-                  `).addClass("segment"));
+              $(".leg-content").last().append($("<div></div>").addClass("segment"));
+
+              $(".segment").last().append($("<img></img>").attr("src", inboundInfo[i].carrier.ImageUrl).addClass("carrier"));
+
+              $(".segment").last().append($("<div></div>").addClass("time-and-place"));
+              $(".time-and-place").last().append($("<div></div>").text(inboundInfo[i].departureDateTime));
+              $(".time-and-place").last().append($("<div></div>").text(inboundInfo[i].originCode));
+
+              $(".segment").last().append($("<i></i>").addClass("fas fa-angle-double-right rightward"));
+
+              $(".segment").last().append($("<div></div>").addClass("time-and-place"));
+              $(".time-and-place").last().append($("<div></div>").text(inboundInfo[i].arrivalDateTime));
+              $(".time-and-place").last().append($("<div></div>").text(inboundInfo[i].destinationCode));
             }
           });
         }

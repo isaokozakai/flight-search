@@ -137,26 +137,29 @@ button#serch:active, button#serch:focus {
 }
 
 .itinerary {
-  background-color: cornflowerblue;
-  padding: 5px;
-  margin: 5px auto;
+  background-color: teal;
+  padding: 10px 10px 5px;
+  margin-bottom: 10px;
   border-radius: 5px;
 }
 
 .itinerary .price {
   border-radius: 3px;
   padding: 0 10px;
+  margin-bottom: 5px;
+  height: 30px;
+  line-height: 30px;
   width: 100px;
   background-color: white;
 }
 
 .itinerary .leg {
   display: flex;
-  height: 90px;
+  height: 70px;
 }
 
 .itinerary .leg .directionality {
-  line-height: 80px;
+  line-height: 60px;
   border-radius: 3px;
   margin: 5px 0;
   padding: 0 10px;
@@ -169,13 +172,34 @@ button#serch:active, button#serch:focus {
   display: flex;
   flex-wrap: wrap;
   border-radius: 3px;
-  margin: 5px;
-  padding: 10px;
+  margin: 5px 0 5px 10px;
+  padding: 0 10px;
   width: 100%;
   background-color: white;
 }
 
 .itinerary .leg .segment {
-  line-height: 30px;
+  display: flex;
   margin-right: 15px;
+}
+
+.itinerary .leg .carrier {
+  height: 50px;
+  line-height: 50px;
+  width: auto;
+  margin: auto 10px auto 0;
+  text-align: center;
+}
+
+.itinerary .leg .time-and-place {
+  margin-right: 10px;
+  line-height: 30px;
+  text-align: center;
+}
+
+.itinerary .leg .rightward {
+  color: #4b4b4b;
+  height: 60px;
+  width: 30px;
+  margin: auto 10px auto 0;
 }
