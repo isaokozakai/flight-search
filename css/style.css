@@ -158,34 +158,25 @@ button#serch:active, button#serch:focus {
   height: 70px;
 }
 
-.itinerary .leg .directionality {
-  line-height: 60px;
-  border-radius: 3px;
-  margin: 5px 0;
-  padding: 0 10px;
-  width: 80px;
-  text-align: center;
-  background-color: white;
-}
-
 .itinerary .leg .leg-content {
   display: flex;
   flex-wrap: wrap;
   border-radius: 3px;
-  margin: 5px 0 5px 10px;
-  padding: 0 10px;
+  margin: 5px 0;
+  padding: 0 5px;
   width: 100%;
   background-color: white;
 }
 
 .itinerary .leg .segment {
   display: flex;
-  margin-right: 15px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .itinerary .leg .carrier {
-  height: 50px;
-  line-height: 50px;
+  height: 40px;
+  line-height: 40px;
   width: auto;
   margin: auto 10px auto 0;
   text-align: center;
@@ -193,7 +184,7 @@ button#serch:active, button#serch:focus {
 
 .itinerary .leg .time-and-place {
   margin-right: 10px;
-  line-height: 30px;
+  line-height: 20px;
   text-align: center;
 }
 

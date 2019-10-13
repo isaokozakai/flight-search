@@ -163,7 +163,6 @@ $(() => {
             $(".itinerary").last().append($("<div></div>").text(`${minPrice} ${response.Query.Currency}`).addClass("price"));
 
             $(".itinerary").last().append($("<div></div>").addClass("leg"));
-            $(".leg").last().append($("<div></div>").text("Outbound").addClass("directionality"));
             $(".leg").last().append($("<div></div>").addClass("leg-content"));
 
             for (let i = 0; i < outboundInfo.length; i++) {
@@ -172,18 +171,19 @@ $(() => {
               $(".segment").last().append($("<img></img>").attr("src", outboundInfo[i].carrier.ImageUrl).addClass("carrier"));
 
               $(".segment").last().append($("<div></div>").addClass("time-and-place"));
-              $(".time-and-place").last().append($("<div></div>").text(outboundInfo[i].departureDateTime));
+              $(".time-and-place").last().append($("<div></div>").text(dateFormatter(outboundInfo[i].departureDateTime)));
               $(".time-and-place").last().append($("<div></div>").text(outboundInfo[i].originCode));
+              $(".time-and-place").last().append($("<div></div>").text(outboundInfo[i].originName));
 
               $(".segment").last().append($("<i></i>").addClass("fas fa-angle-double-right rightward"));
 
               $(".segment").last().append($("<div></div>").addClass("time-and-place"));
-              $(".time-and-place").last().append($("<div></div>").text(outboundInfo[i].arrivalDateTime));
+              $(".time-and-place").last().append($("<div></div>").text(dateFormatter(outboundInfo[i].arrivalDateTime)));
               $(".time-and-place").last().append($("<div></div>").text(outboundInfo[i].destinationCode));
+              $(".time-and-place").last().append($("<div></div>").text(outboundInfo[i].destinationName));
             }
 
             $(".itinerary").last().append($("<div></div>").addClass("leg"));
-            $(".leg").last().append($("<div></div>").text("Inbound").addClass("directionality"));
             $(".leg").last().append($("<div></div>").addClass("leg-content"));
 
             for (let i = 0; i < inboundInfo.length; i++) {
@@ -192,18 +192,27 @@ $(() => {
               $(".segment").last().append($("<img></img>").attr("src", inboundInfo[i].carrier.ImageUrl).addClass("carrier"));
 
               $(".segment").last().append($("<div></div>").addClass("time-and-place"));
-              $(".time-and-place").last().append($("<div></div>").text(inboundInfo[i].departureDateTime));
+              $(".time-and-place").last().append($("<div></div>").text(dateFormatter(inboundInfo[i].departureDateTime)));
               $(".time-and-place").last().append($("<div></div>").text(inboundInfo[i].originCode));
+              $(".time-and-place").last().append($("<div></div>").text(inboundInfo[i].originName));
 
               $(".segment").last().append($("<i></i>").addClass("fas fa-angle-double-right rightward"));
 
               $(".segment").last().append($("<div></div>").addClass("time-and-place"));
-              $(".time-and-place").last().append($("<div></div>").text(inboundInfo[i].arrivalDateTime));
+              $(".time-and-place").last().append($("<div></div>").text(dateFormatter(inboundInfo[i].arrivalDateTime)));
               $(".time-and-place").last().append($("<div></div>").text(inboundInfo[i].destinationCode));
+              $(".time-and-place").last().append($("<div></div>").text(inboundInfo[i].destinationName));
             }
           });
         }
       });
     });
   });
+
+  const dateFormatter = (value) => {
+    const date = new Date(value);
+    const options = { hour: 'numeric', minute: 'numeric', month: 'short', day: 'numeric' };
+    return date.toLocaleString('en-US', options);
+  
+  }
 });
