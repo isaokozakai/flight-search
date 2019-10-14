@@ -1,6 +1,6 @@
 $(() => {
   $("#departureDate").datepicker();
-  $("#arrivalDate").datepicker();
+  $("#returnDate").datepicker();
 
   $("#from, #to").autocomplete({
     source: (req, res) => {
@@ -8,7 +8,7 @@ $(() => {
         "async": true,
         "crossDomain": true,
         "data": `text=${req.term}`,
-        "url": 'https://cometari-airportsfinder-v1.p.rapidapi.com/api/airports/by-text',
+        "url": "https://cometari-airportsfinder-v1.p.rapidapi.com/api/airports/by-text",
         "method": "GET",
         "headers": {
           "x-rapidapi-host": "cometari-airportsfinder-v1.p.rapidapi.com",
@@ -24,37 +24,87 @@ $(() => {
         )
       ));
     },
-    select: function (e, ui) {
-      $(this).attr('code', ui.item.code);
+    select: (e, ui) => {
+      $(e.target).attr("code", ui.item.code);
     }
   });
 
+  // place a balloon for travelers
+  const posision = $("#travelers").offset();
+  $("#traveler-balloon").css({ top: posision.top + 37, left: posision.left });
+
+  $("#travelers").on("click touchstart", (e) => {
+    $("#traveler-balloon").toggle();
+  });
+
+  $(document).on("click touchstart", (e) => {
+    if (
+      $("#traveler-balloon").css("display") == "block"
+      && !(e.target.id == "travelers" || $(e.target)[0].closest("#traveler-balloon"))
+    ) {
+      $("#traveler-balloon").css({ display: "none" });
+    }
+  });
+
+  $("#adults, #children, #infants").change((e) => {
+    const adults = parseInt($("#adults").val());
+    const children = parseInt($("#children").val());
+    const infants = parseInt($("#infants").val());
+    const total = adults + children + infants;
+    let modifier = "adult"
+    if (total > 1) {
+      modifier = "travelers"
+    }
+    // set a value for the display
+    $("#travelers").val(total + " " + modifier)
+    // set values for the API
+    $("#travelers").attr({ adults, children, infants });
+  })
+
   $(".minus").click(function (e) {
-    const $inputElement = $(this).next();
-    const value = parseInt($inputElement.val());
-    if (value == 0) return;
-    $inputElement.val(value - 1);
+    const $inputField = $(this).next();
+    const $plusButton = $(this).next().next();
+    const value = parseInt($inputField.val());
+
+    if ((($inputField.attr("id") == "adults") && value == 2) || value == 1) {
+      $(this).prop("disabled", true);
+    } else {
+      $plusButton.prop("disabled", false);
+    }
+    $inputField.val(value - 1);
+
+    // trigger the change event for the number of each traveler
+    $inputField.trigger("change");
   });
 
   $(".plus").click(function (e) {
-    const $inputElement = $(this).prev();
-    const value = parseInt($inputElement.val());
-    if (value == 8) return;
-    $inputElement.val(value + 1);
+    const $inputField = $(this).prev();
+    const $minusButton = $(this).prev().prev();
+    const value = parseInt($inputField.val());
+
+    if (value == 7) {
+      $(this).prop("disabled", true);
+    } else {
+      $minusButton.prop("disabled", false);
+    }
+    $inputField.val(value + 1);
+
+    // trigger the change event for the number of each traveler
+    $inputField.trigger("change");
   });
 
   $("#inputForm").submit((e) => {
     e.preventDefault();
     $("#result").empty();
-    let [originPlace, destinationPlace, outboundDate, inboundDate, cabinClass, adults, children, infants] = e.target.elements;
-    originPlace = $(originPlace)[0].attributes.code.value;
-    destinationPlace = $(destinationPlace)[0].attributes.code.value;
-    outboundDate = $.datepicker.formatDate("yy-mm-dd", new Date(outboundDate.value));
-    inboundDate = $.datepicker.formatDate("yy-mm-dd", new Date(inboundDate.value));
-    cabinClass = cabinClass.value;
-    adults = adults.value.toString();
-    children = children.value.toString();
-    infants = infants.value.toString();
+    const inputItems = e.target.elements;
+    const originPlace = inputItems.from.attributes.code.value;
+    const destinationPlace = inputItems.to.attributes.code.value;
+    const outboundDate = $.datepicker.formatDate("yy-mm-dd", new Date(inputItems.departureDate.value));
+    const inboundDate = $.datepicker.formatDate("yy-mm-dd", new Date(inputItems.returnDate.value));
+    const cabinClass = inputItems.cabinClass.value;
+    const adults = inputItems.travelers.attributes.adults.value;
+    const children = inputItems.travelers.attributes.children.value;
+    const infants = inputItems.travelers.attributes.infants.value;
 
     const setting = {
       "async": true,
@@ -75,6 +125,7 @@ $(() => {
         adults,
         children,
         infants,
+        "groupPricing": true,
         "country": "US",
         "currency": "USD",
         "locale": "en-US"
@@ -211,8 +262,7 @@ $(() => {
 
   const dateFormatter = (value) => {
     const date = new Date(value);
-    const options = { hour: 'numeric', minute: 'numeric', month: 'short', day: 'numeric' };
-    return date.toLocaleString('en-US', options);
-  
+    const options = { hour: "numeric", minute: "numeric", month: "short", day: "numeric" };
+    return date.toLocaleString("en-US", options);
   }
 });

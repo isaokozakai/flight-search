@@ -26,58 +26,76 @@
   <main>
     <div class="container">
       <form id="inputForm" autocomplete="off">
-        <div class="input-item-container airport">
-          <label>from</label>
-          <input type="text" name="originPlace" id="from">
-        </div>
-        <div class="input-item-container airport">
-          <label>to</label>
-          <input type="text" name="destinationPlace" id="to">
-        </div>
-        <div class="input-item-container date">
-          <label>departure date</label>
-          <input type="text" name="outboundDate" id="departureDate">
-        </div>
-        <div class="input-item-container date">
-          <label>arrival date</label>
-          <input type="text" name="inboundDate" id="arrivalDate">
-        </div>
-        <div class="input-item-container cabinClass">
-          <label>cabin class</label>
-          <select name="cabinClass">
-            <option value="economy">Economy</option>
-            <option value="premiumeconomy">Premium Economy</option>
-            <option value="business">Business Class</option>
-            <option value="first">First Class</option>
-          </select>
-        </div>
-        <div class="input-item-container">
-          <label>adults</label>
-          <div class="number-selection">
-            <div class="btn minus"><i class="fas fa-minus-circle"></i></div>
-            <input type="text" name="adults" id="adults" value="1">
-            <div class="btn plus"><i class="fas fa-plus-circle"></i></div>
+        <div class="row">
+          <div class="input-item-container airport">
+            <label for="from">From</label>
+            <input type="text" name="from" id="from">
           </div>
         </div>
-        <div class="input-item-container">
-          <label>children</label>
-          <div class="number-selection">
-            <div class="btn minus"><i class="fas fa-minus-circle"></i></div>
-            <input type="text" name="children" id="children" value="0">
-            <div class="btn plus"><i class="fas fa-plus-circle"></i></div>
+        <div class="row">
+          <div class="input-item-container airport">
+            <label for="to">To</label>
+            <input type="text" name="to" id="to">
           </div>
         </div>
-        <div class="input-item-container">
-          <label>infants</label>
-          <div class="number-selection">
-            <div class="btn minus"><i class="fas fa-minus-circle"></i></div>
-            <input type="text" name="infants" id="infants" value="0">
-            <div class="btn plus"><i class="fas fa-plus-circle"></i></div>
+        <div class="row">
+          <div class="input-item-container date">
+            <label for="departureDate">Depart</label>
+            <input type="text" name="departureDate" id="departureDate">
+          </div>
+          <div class="input-item-container date">
+            <label for="returnDate">Return</label>
+            <input type="text" name="returnDate" id="returnDate">
           </div>
         </div>
-        <button id="serch">search</button>
+        <div class="row">
+          <div class="input-item-container cabinClass">
+            <label for="cabinClass">Cabin class</label>
+            <select name="cabinClass" id="cabinClass">
+              <option value="economy">Economy</option>
+              <option value="premiumeconomy">Premium Economy</option>
+              <option value="business">Business Class</option>
+              <option value="first">First Class</option>
+            </select>
+          </div>
+          <div class="input-item-container">
+            <label for="travelers">Travelers</label>
+            <input type="text" name="travelers" id="travelers" value="1 adult" adult="1" children="0" infants="0" readonly>
+          </div>
+        </div>
+        <div class="serch-button-row">
+          <button id="serch" type="submit">search</button>
+        </div>
       </form>
     </div>
+
+    <div id="traveler-balloon" class="balloon">
+      <div class="balloon-container">
+        <label>Adults</label><span>over 16 years</span>
+        <div class="number-selection">
+          <button class="minus" type="button" disabled><i class="fas fa-minus-circle"></i></button>
+          <input type="text" name="adults" id="adults" value="1" readonly>
+          <button class="plus" type="button"><i class="fas fa-plus-circle"></i></button>
+        </div>
+      </div>
+      <div class="balloon-container">
+        <label>Children</label><span>0-15 years</span>
+        <div class="number-selection">
+          <button class="minus" type="button" disabled><i class="fas fa-minus-circle"></i></button>
+          <input type="text" name="children" id="children" value="0" readonly>
+          <button class="plus" type="button"><i class="fas fa-plus-circle"></i></button>
+        </div>
+      </div>
+      <div class="balloon-container">
+        <label>Infants</label><span>under 12 months</span>
+        <div class="number-selection">
+          <button class="minus" type="button" disabled><i class="fas fa-minus-circle"></i></button>
+          <input type="text" name="infants" id="infants" value="0" readonly>
+          <button class="plus" type="button"><i class="fas fa-plus-circle"></i></button>
+        </div>
+      </div>
+    </div>
+
     <div class="container">
       <div id="result"></div>
     </div>
