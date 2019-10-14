@@ -7,20 +7,25 @@ $(() => {
       $.ajax({
         "async": true,
         "crossDomain": true,
-        "data": `text=${req.term}`,
-        "url": "https://cometari-airportsfinder-v1.p.rapidapi.com/api/airports/by-text",
+        "data": `query=${req.term}`,
+        "url": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/US/USD/en-US/",
         "method": "GET",
         "headers": {
-          "x-rapidapi-host": "cometari-airportsfinder-v1.p.rapidapi.com",
+          "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
           "x-rapidapi-key": "9e17e55ef7msh7b448d0f0cae1b2p13d1cfjsn95340acc8e72"
         }
       }).done((data) => res(
-        data.map(
-          (airport) => ({
-            label: `${airport.name} (${airport.code})`,
-            value: `${airport.name} (${airport.code})`,
-            code: `${airport.code}-sky`
-          })
+        data.Places.map(
+          (place) => {
+            const placeId = place.PlaceId.slice(0, -4);
+            const cityId = place.CityId.slice(0, -4);
+            const modifier = placeId == cityId ? "Any" : placeId;
+            return ({
+              label: `${place.PlaceName} (${modifier})`,
+              value: `${place.PlaceName} (${modifier})`,
+              code: place.PlaceId
+            })
+          }
         )
       ));
     },
@@ -51,10 +56,8 @@ $(() => {
     const children = parseInt($("#children").val());
     const infants = parseInt($("#infants").val());
     const total = adults + children + infants;
-    let modifier = "adult"
-    if (total > 1) {
-      modifier = "travelers"
-    }
+    let modifier = total > 1 ? "travelers" : "adult";
+
     // set a value for the display
     $("#travelers").val(total + " " + modifier)
     // set values for the API
@@ -133,13 +136,13 @@ $(() => {
     };
 
     $.ajax(setting).done((response) => {
-      console.log(response);
+      console.log("done for Create session", response);
 
     }).fail((jqXHR, textStatus, errorThrown) => {
-      console.log(jqXHR, textStatus, errorThrown);
+      console.log("fail for Create session", jqXHR, textStatus, errorThrown);
 
     }).always((data, textStatus, jqXHR) => {
-      console.log(data, textStatus, jqXHR);
+      console.log("always for Create session", data, textStatus, jqXHR);
 
       const sessionkey = jqXHR.getResponseHeader("location").slice(-36);
       const setting = {
@@ -154,12 +157,15 @@ $(() => {
         "data": {
           "sortType": "price",
           "sortOrder": "asc",
-          "stops": "1"
+          "stops": "1",
+          "pageIndex": "1",
+          "pageSize": "20"
         }
       };
 
       $.ajax(setting).done((response) => {
-        console.log(response);
+        console.log("done for Poll session results", response);
+
         if (response.Itineraries.length === 0) {
           console.log("no flight")
         } else {
