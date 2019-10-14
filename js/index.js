@@ -175,8 +175,7 @@ const pollSessionResult = (setting) => {
       setTimeout(() => {
         pollSessionResult(setting);
       }, 500);
-    }
-    else {
+    } else {
       console.log(response);
       displayResult(response);
     }
