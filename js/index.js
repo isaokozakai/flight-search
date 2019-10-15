@@ -28,18 +28,20 @@ $(() => {
           "x-rapidapi-key": "9e17e55ef7msh7b448d0f0cae1b2p13d1cfjsn95340acc8e72"
         }
       }).done((data) => res(
-        data.Places.map(
-          (place) => {
-            const placeId = place.PlaceId.slice(0, -4);
-            const cityId = place.CityId.slice(0, -4);
-            const modifier = placeId == cityId ? "Any" : placeId;
-            return ({
-              label: `${place.PlaceName} (${modifier})`,
-              value: `${place.PlaceName} (${modifier})`,
-              code: place.PlaceId
-            })
-          }
-        )
+        data.Places
+          .filter((place) => place.PlaceId != place.CountryId)
+          .map(
+            (place) => {
+              const placeId = place.PlaceId.slice(0, -4);
+              const cityId = place.CityId.slice(0, -4);
+              const modifier = placeId == cityId ? "Any" : placeId;
+              return ({
+                label: `${place.PlaceName} (${modifier})`,
+                value: `${place.PlaceName} (${modifier})`,
+                code: place.PlaceId
+              })
+            }
+          )
       ));
     },
     select: (e, ui) => {
