@@ -1,4 +1,17 @@
 $(() => {
+  $.ajax({
+    "async": true,
+    "crossDomain": true,
+    "url": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/reference/v1.0/currencies",
+    "method": "GET",
+    "headers": {
+      "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
+      "x-rapidapi-key": "9e17e55ef7msh7b448d0f0cae1b2p13d1cfjsn95340acc8e72"
+    }
+  }).done(function (response) {
+    console.log(response);
+  });
+
   $("#departureDate").datepicker();
   $("#returnDate").datepicker();
 
@@ -34,22 +47,44 @@ $(() => {
     }
   });
 
-  // place a balloon for travelers
-  const posision = $("#travelers").offset();
-  $("#traveler-balloon").css({ top: posision.top + 37, left: posision.left });
+  const $travelersField = $("#travelers");
+  const $travelersBalloon = $("#travelers-balloon");
 
-  $("#travelers").on("click touchstart", (e) => {
-    $("#traveler-balloon").toggle();
+  // place a balloon for travelers
+  const posision = $travelersField.offset();
+  $travelersBalloon.css({ top: posision.top + 37, left: posision.left });
+
+  $travelersField.on("click touchstart", (e) => {
+    $travelersBalloon.toggle();
+  });
+
+  const $regionalInfoBtn = $("#regionalInfo");
+  const $modalBackground = $(".modal-overlay");
+  const $modal = $(".modal");
+
+  $regionalInfoBtn.on("click touchstart", (e) => {
+    $regionalInfoBtn.css({ outline: "none" });
+    $modalBackground.css({ display: "block" });
+    $modal.css({ display: "block" });
   });
 
   $(document).on("click touchstart", (e) => {
     if (
-      $("#traveler-balloon").css("display") == "block"
-      && !(e.target.id == "travelers" || $(e.target)[0].closest("#traveler-balloon"))
+      $travelersBalloon.css("display") == "block"
+      && !($(e.target).is($travelersField) || $(e.target).closest($travelersBalloon)[0])
     ) {
-      $("#traveler-balloon").css({ display: "none" });
+      $travelersBalloon.css({ display: "none" });
+    }
+    if ($(e.target).is($modalBackground)) {
+      $modalBackground.css({ display: "none" });
+      $modal.css({ display: "none" });
     }
   });
+
+  $(".close").click((e) => {
+    $modalBackground.css({ display: "none" });
+    $modal.css({ display: "none" });
+  })
 
   $("#adults, #children, #infants").change((e) => {
     const adults = parseInt($("#adults").val());

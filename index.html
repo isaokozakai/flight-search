@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" href="images/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
@@ -20,56 +21,77 @@
 <body>
   <header>
     <div class="container">
-      <h1>Flight Search</h1>
+      <div class="row">
+        <h1>Flight Search</h1>
+        <button name="regionalInfo" id="regionalInfo">Region</button>
+      </div>
     </div>
   </header>
+
+  <div class="modal-overlay" id="modal-overlay">
+  </div>
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <h2>Regional settings</h2>
+      <button class="close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>Some text in the Modal Body</p>
+      <p>Some other text...</p>
+    </div>
+  </div>
+
   <main>
-    <div class="container">
-      <form id="inputForm" autocomplete="off">
-        <div class="row">
-          <div class="input-item-container airport">
-            <label for="from">From</label>
-            <input type="text" name="from" id="from">
+    <div class="row">
+      <div class="container left">
+        <form id="inputForm" autocomplete="off">
+          <div class="row">
+            <div class="input-item-container airport">
+              <label for="from">From</label>
+              <input type="text" name="from" id="from">
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="input-item-container airport">
-            <label for="to">To</label>
-            <input type="text" name="to" id="to">
+          <div class="row">
+            <div class="input-item-container airport">
+              <label for="to">To</label>
+              <input type="text" name="to" id="to">
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="input-item-container date">
-            <label for="departureDate">Depart</label>
-            <input type="text" name="departureDate" id="departureDate">
+          <div class="row">
+            <div class="input-item-container date">
+              <label for="departureDate">Depart</label>
+              <input type="text" name="departureDate" id="departureDate">
+            </div>
+            <div class="input-item-container date">
+              <label for="returnDate">Return</label>
+              <input type="text" name="returnDate" id="returnDate">
+            </div>
           </div>
-          <div class="input-item-container date">
-            <label for="returnDate">Return</label>
-            <input type="text" name="returnDate" id="returnDate">
+          <div class="row">
+            <div class="input-item-container cabinClass">
+              <label for="cabinClass">Cabin class</label>
+              <select name="cabinClass" id="cabinClass">
+                <option value="economy">Economy</option>
+                <option value="premiumeconomy">Premium Economy</option>
+                <option value="business">Business Class</option>
+                <option value="first">First Class</option>
+              </select>
+            </div>
+            <div class="input-item-container travelers">
+              <label for="travelers">Travelers</label>
+              <input type="text" name="travelers" id="travelers" value="1 adult" adults="1" children="0" infants="0"
+                readonly>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="input-item-container cabinClass">
-            <label for="cabinClass">Cabin class</label>
-            <select name="cabinClass" id="cabinClass">
-              <option value="economy">Economy</option>
-              <option value="premiumeconomy">Premium Economy</option>
-              <option value="business">Business Class</option>
-              <option value="first">First Class</option>
-            </select>
+          <div class="serch-button-row">
+            <button id="serch" type="submit">search</button>
           </div>
-          <div class="input-item-container">
-            <label for="travelers">Travelers</label>
-            <input type="text" name="travelers" id="travelers" value="1 adult" adults="1" children="0" infants="0" readonly>
-          </div>
-        </div>
-        <div class="serch-button-row">
-          <button id="serch" type="submit">search</button>
-        </div>
-      </form>
+        </form>
+      </div>
+      <div class="container right"></div>
     </div>
 
-    <div id="traveler-balloon" class="balloon">
+    <div id="travelers-balloon" class="balloon">
       <div class="balloon-container">
         <label>Adults</label><span>over 16 years</span>
         <div class="number-selection">
