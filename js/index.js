@@ -1,15 +1,28 @@
 $(() => {
+  // create a dropdown for countries
   $.ajax({
-    "async": true,
-    "crossDomain": true,
-    "url": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/reference/v1.0/currencies",
-    "method": "GET",
-    "headers": {
-      "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-      "x-rapidapi-key": "9e17e55ef7msh7b448d0f0cae1b2p13d1cfjsn95340acc8e72"
-    }
+    ...commonSetting,
+    "url": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/reference/v1.0/countries/en-US"
   }).done(function (response) {
-    console.log(response);
+    response.Countries.sort((a, b) => a.Name < b.Name ? -1 : 1)
+      .forEach((countries) => {
+        $("#countries").append($("<option>", { code: countries.Code }).text(countries.Name));
+      });
+    // set a default value
+    $("#countries").val("United States");
+  });
+
+  // create a dropdown for currencies
+  $.ajax({
+    ...commonSetting,
+    "url": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/reference/v1.0/currencies"
+  }).done(function (response) {
+    response.Currencies.sort((a, b) => a.Code < b.Code ? -1 : 1)
+      .forEach((currency) => {
+        $("#currencies").append($("<option>").text(currency.Code));
+      });
+    // set a default value
+    $("#currencies").val("USD");
   });
 
   $("#departureDate").datepicker();
@@ -18,15 +31,9 @@ $(() => {
   $("#from, #to").autocomplete({
     source: (req, res) => {
       $.ajax({
-        "async": true,
-        "crossDomain": true,
+        ...commonSetting,
         "data": `query=${req.term}`,
-        "url": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/US/USD/en-US/",
-        "method": "GET",
-        "headers": {
-          "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-          "x-rapidapi-key": "9e17e55ef7msh7b448d0f0cae1b2p13d1cfjsn95340acc8e72"
-        }
+        "url": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/US/USD/en-US/"
       }).done((data) => res(
         data.Places
           .filter((place) => place.PlaceId != place.CountryId)
@@ -145,15 +152,15 @@ $(() => {
     const adults = inputItems.travelers.attributes.adults.value;
     const children = inputItems.travelers.attributes.children.value;
     const infants = inputItems.travelers.attributes.infants.value;
+    const country = inputItems.countries.attributes.code;
+    const currency = inputItems.currencies.value;
 
-    const setting = {
-      "async": true,
-      "crossDomain": true,
+    const createSessionSetting = {
+      ...commonSetting,
       "url": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/v1.0",
       "method": "POST",
       "headers": {
-        "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-        "x-rapidapi-key": "9e17e55ef7msh7b448d0f0cae1b2p13d1cfjsn95340acc8e72",
+        ...commonSetting.headers,
         "content-type": "application/x-www-form-urlencoded"
       },
       "data": {
@@ -165,14 +172,14 @@ $(() => {
         adults,
         children,
         infants,
+        country,
+        currency,
         "groupPricing": true,
-        "country": "US",
-        "currency": "USD",
         "locale": "en-US"
       }
     };
 
-    $.ajax(setting).done((response) => {
+    $.ajax(createSessionSetting).done((response) => {
       console.log("done for Create session", response);
 
     }).fail((jqXHR, textStatus, errorThrown) => {
@@ -182,15 +189,9 @@ $(() => {
       console.log("always for Create session", data, textStatus, jqXHR);
 
       const sessionkey = jqXHR.getResponseHeader("location").slice(-36);
-      const setting = {
-        "async": true,
-        "crossDomain": true,
+      const pollSessionResultSetting = {
+        ...commonSetting,
         "url": `https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/uk2/v1.0/${sessionkey}`,
-        "method": "GET",
-        "headers": {
-          "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-          "x-rapidapi-key": "9e17e55ef7msh7b448d0f0cae1b2p13d1cfjsn95340acc8e72"
-        },
         "data": {
           "sortType": "price",
           "sortOrder": "asc",
@@ -200,10 +201,20 @@ $(() => {
         }
       };
 
-      pollSessionResult(setting);
+      pollSessionResult(pollSessionResultSetting);
     });
   });
 });
+
+const commonSetting = {
+  "async": true,
+  "crossDomain": true,
+  "method": "GET",
+  "headers": {
+    "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
+    "x-rapidapi-key": "9e17e55ef7msh7b448d0f0cae1b2p13d1cfjsn95340acc8e72"
+  }
+};
 
 const pollSessionResult = (setting) => {
   $.ajax(setting).done((response) => {
@@ -270,49 +281,49 @@ const displayResult = (response) => {
 
       inboundInfo.sort((a, b) => a.departureDateTime < b.departureDateTime ? -1 : 1);
 
-      $("#result").append($("<div></div>").addClass("itinerary"));
-      $(".itinerary").last().append($("<div></div>").text(`${minPrice} ${response.Query.Currency}`).addClass("price"));
+      $("#result").append($("<div>").addClass("itinerary"));
+      $(".itinerary").last().append($("<div>").text(`${minPrice} ${response.Query.Currency}`).addClass("price"));
 
-      $(".itinerary").last().append($("<div></div>").addClass("leg"));
-      $(".leg").last().append($("<div></div>").addClass("leg-content"));
+      $(".itinerary").last().append($("<div>").addClass("leg"));
+      $(".leg").last().append($("<div>").addClass("leg-content"));
 
       for (let i = 0; i < outboundInfo.length; i++) {
-        $(".leg-content").last().append($("<div></div>").addClass("segment"));
+        $(".leg-content").last().append($("<div>").addClass("segment"));
 
-        $(".segment").last().append($("<img></img>").attr("src", outboundInfo[i].carrier.ImageUrl).addClass("carrier"));
+        $(".segment").last().append($("<img>", { src: outboundInfo[i].carrier.ImageUrl }).addClass("carrier"));
 
-        $(".segment").last().append($("<div></div>").addClass("time-and-place"));
-        $(".time-and-place").last().append($("<div></div>").text(dateFormatter(outboundInfo[i].departureDateTime)));
-        $(".time-and-place").last().append($("<div></div>").text(outboundInfo[i].originCode));
-        $(".time-and-place").last().append($("<div></div>").text(outboundInfo[i].originName));
+        $(".segment").last().append($("<div>").addClass("time-and-place"));
+        $(".time-and-place").last().append($("<div>").text(dateFormatter(outboundInfo[i].departureDateTime)));
+        $(".time-and-place").last().append($("<div>").text(outboundInfo[i].originCode));
+        $(".time-and-place").last().append($("<div>").text(outboundInfo[i].originName));
 
-        $(".segment").last().append($("<i></i>").addClass("fas fa-angle-double-right rightward"));
+        $(".segment").last().append($("<i>").addClass("fas fa-angle-double-right rightward"));
 
-        $(".segment").last().append($("<div></div>").addClass("time-and-place"));
-        $(".time-and-place").last().append($("<div></div>").text(dateFormatter(outboundInfo[i].arrivalDateTime)));
-        $(".time-and-place").last().append($("<div></div>").text(outboundInfo[i].destinationCode));
-        $(".time-and-place").last().append($("<div></div>").text(outboundInfo[i].destinationName));
+        $(".segment").last().append($("<div>").addClass("time-and-place"));
+        $(".time-and-place").last().append($("<div>").text(dateFormatter(outboundInfo[i].arrivalDateTime)));
+        $(".time-and-place").last().append($("<div>").text(outboundInfo[i].destinationCode));
+        $(".time-and-place").last().append($("<div>").text(outboundInfo[i].destinationName));
       }
 
-      $(".itinerary").last().append($("<div></div>").addClass("leg"));
-      $(".leg").last().append($("<div></div>").addClass("leg-content"));
+      $(".itinerary").last().append($("<div>").addClass("leg"));
+      $(".leg").last().append($("<div>").addClass("leg-content"));
 
       for (let i = 0; i < inboundInfo.length; i++) {
-        $(".leg-content").last().append($("<div></div>").addClass("segment"));
+        $(".leg-content").last().append($("<div>").addClass("segment"));
 
-        $(".segment").last().append($("<img></img>").attr("src", inboundInfo[i].carrier.ImageUrl).addClass("carrier"));
+        $(".segment").last().append($("<img>", { src: inboundInfo[i].carrier.ImageUrl }).addClass("carrier"));
 
-        $(".segment").last().append($("<div></div>").addClass("time-and-place"));
-        $(".time-and-place").last().append($("<div></div>").text(dateFormatter(inboundInfo[i].departureDateTime)));
-        $(".time-and-place").last().append($("<div></div>").text(inboundInfo[i].originCode));
-        $(".time-and-place").last().append($("<div></div>").text(inboundInfo[i].originName));
+        $(".segment").last().append($("<div>").addClass("time-and-place"));
+        $(".time-and-place").last().append($("<div>").text(dateFormatter(inboundInfo[i].departureDateTime)));
+        $(".time-and-place").last().append($("<div>").text(inboundInfo[i].originCode));
+        $(".time-and-place").last().append($("<div>").text(inboundInfo[i].originName));
 
-        $(".segment").last().append($("<i></i>").addClass("fas fa-angle-double-right rightward"));
+        $(".segment").last().append($("<i>").addClass("fas fa-angle-double-right rightward"));
 
-        $(".segment").last().append($("<div></div>").addClass("time-and-place"));
-        $(".time-and-place").last().append($("<div></div>").text(dateFormatter(inboundInfo[i].arrivalDateTime)));
-        $(".time-and-place").last().append($("<div></div>").text(inboundInfo[i].destinationCode));
-        $(".time-and-place").last().append($("<div></div>").text(inboundInfo[i].destinationName));
+        $(".segment").last().append($("<div>").addClass("time-and-place"));
+        $(".time-and-place").last().append($("<div>").text(dateFormatter(inboundInfo[i].arrivalDateTime)));
+        $(".time-and-place").last().append($("<div>").text(inboundInfo[i].destinationCode));
+        $(".time-and-place").last().append($("<div>").text(inboundInfo[i].destinationName));
       }
     });
   }
@@ -320,6 +331,6 @@ const displayResult = (response) => {
 
 const dateFormatter = (value) => {
   const date = new Date(value);
-  const options = { hour: "numeric", minute: "numeric", month: "short", day: "numeric" };
+  const options = { hour: "numeric", minute: "numeric", year: "numeric", month: "short", day: "numeric" };
   return date.toLocaleString("en-US", options);
 };
