@@ -14,6 +14,7 @@ body {
 .row {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .modal-overlay {
@@ -85,10 +86,6 @@ header {
   background-color: brown;
 }
 
-.row {
-  justify-content: space-between;
-}
-
 header h1 {
   margin: 0;
 }
@@ -112,33 +109,31 @@ main > .row > .container {
 }
 
 #inputForm .input-item-container {
-  margin: 5px 0;
+  margin: 5px 10px 5px 0;
   width: 100%;
 }
 
 #inputForm input {
-  height: 30px;
-  width: 90%;
-  font-size: 15px;
-  line-height: 30px;
+  height: 36px;
+  width: 100%;
+  font-size: 17.5px;
+  line-height: 36px;
   border-radius: 3px;
   border: 1px solid black;
   text-indent: 10px;
 }
 
-#inputForm .airport input {
-  width: 95%;
-}
-
-#inputForm .date, #inputForm .cabinClass, #inputForm .travelers {
-  width: 210px;
+#inputForm .date,
+#inputForm .cabinClass,
+#inputForm .travelers {
+  width: 200px;
 }
 
 #inputForm select {
-  height: 34px;
-  width: 90%;
-  font-size: 15px;
-  line-height: 35px;
+  height: 39px;
+  width: 100%;
+  font-size: 17.5px;
+  line-height: 39px;
   border-radius: 3px;
   border: 1px solid black;
   text-indent: 7px;
@@ -215,10 +210,11 @@ main > .row > .container {
 
 #inputForm label {
   display: block;
-  width: 90%;
+  width: 100%;
 }
 
 .ui-autocomplete{
+  font-size: 17.5px;
 	max-height: 200px;
 	overflow-x: hidden;
 	overflow-y: auto;
@@ -226,18 +222,19 @@ main > .row > .container {
 
 .serch-button-row {
   margin-top: 20px;
+  padding-right: 7px;
 }
 
 button#serch {
-  height: 35px;
-  width: 200px;
-  line-height: 35px;
+  height: 37px;
+  width: 100%;
+  line-height: 37px;
   background-color: #6c6c6c;
   border-radius: 5px;
   border: none;
   cursor: pointer;
   color: #ffffff;
-  font-size: 15px;
+  font-size: 17.5px;
   font-weight: bold;
   padding: 0 10px;
   text-decoration: none;
@@ -249,7 +246,8 @@ button#serch:hover {
   background-color: green;
 }
 
-button#serch:active, button#serch:focus {
+button#serch:active,
+button#serch:focus {
   outline: none;
   box-shadow: 0 0 0 2px #66b0ff;
 }
