@@ -8,119 +8,6 @@ const commonSetting = {
   }
 };
 
-const pollSessionResult = (setting) => {
-  $.ajax(setting).done((response) => {
-    console.log(response.Status);
-    if (response.Status != "UpdatesComplete") {
-      setTimeout(() => {
-        pollSessionResult(setting);
-      }, 500);
-    } else {
-      console.log(response);
-      displayResult(response);
-    }
-  });
-};
-
-const displayResult = (response) => {
-  if (response.Itineraries.length === 0) {
-    console.log("no flight")
-  } else {
-    response.Itineraries.forEach((itinerary) => {
-      const minPrice = itinerary.PricingOptions[0].Price;
-
-      const outboundLeg = response.Legs.find((leg) => leg.Id === itinerary.OutboundLegId);
-      const outboundInfo = outboundLeg.SegmentIds.map((segmentId) => {
-        const segment = response.Segments.find((segment) => segment.Id === segmentId)
-        const origin = response.Places.find((place) => place.Id === segment.OriginStation);
-        const destination = response.Places.find((place) => place.Id === segment.DestinationStation);
-        const carrier = response.Carriers.find((carrier) => carrier.Id === segment.Carrier);
-        return ({
-          id: segmentId,
-          originId: origin.Id,
-          originCode: origin.Code,
-          originName: origin.Name,
-          departureDateTime: segment.DepartureDateTime,
-          destinationId: destination.Id,
-          destinationCode: destination.Code,
-          destinationName: destination.Name,
-          arrivalDateTime: segment.ArrivalDateTime,
-          carrier
-        });
-      });
-
-      outboundInfo.sort((a, b) => a.departureDateTime < b.departureDateTime ? -1 : 1);
-
-      const inboundLeg = response.Legs.find((leg) => leg.Id === itinerary.InboundLegId);
-      const inboundInfo = inboundLeg.SegmentIds.map((segmentId) => {
-        const segment = response.Segments.find((segment) => segment.Id === segmentId)
-        const origin = response.Places.find((place) => place.Id === segment.OriginStation);
-        const destination = response.Places.find((place) => place.Id === segment.DestinationStation);
-        const carrier = response.Carriers.find((carrier) => carrier.Id === segment.Carrier);
-        return ({
-          id: segmentId,
-          originId: origin.Id,
-          originCode: origin.Code,
-          originName: origin.Name,
-          departureDateTime: segment.DepartureDateTime,
-          destinationId: destination.Id,
-          destinationCode: destination.Code,
-          destinationName: destination.Name,
-          arrivalDateTime: segment.ArrivalDateTime,
-          carrier
-        });
-      });
-
-      inboundInfo.sort((a, b) => a.departureDateTime < b.departureDateTime ? -1 : 1);
-
-      $("#result").append($("<div>").addClass("itinerary"));
-      $(".itinerary").last().append($("<div>").text(`${minPrice} ${response.Query.Currency}`).addClass("price"));
-
-      $(".itinerary").last().append($("<div>").addClass("leg"));
-      $(".leg").last().append($("<div>").addClass("leg-content"));
-
-      for (let i = 0; i < outboundInfo.length; i++) {
-        $(".leg-content").last().append($("<div>").addClass("segment"));
-
-        $(".segment").last().append($("<img>", { src: outboundInfo[i].carrier.ImageUrl }).addClass("carrier"));
-
-        $(".segment").last().append($("<div>").addClass("time-and-place"));
-        $(".time-and-place").last().append($("<div>").text(dateFormatter(outboundInfo[i].departureDateTime)));
-        $(".time-and-place").last().append($("<div>").text(outboundInfo[i].originCode));
-        $(".time-and-place").last().append($("<div>").text(outboundInfo[i].originName));
-
-        $(".segment").last().append($("<i>").addClass("fas fa-angle-double-right rightward"));
-
-        $(".segment").last().append($("<div>").addClass("time-and-place"));
-        $(".time-and-place").last().append($("<div>").text(dateFormatter(outboundInfo[i].arrivalDateTime)));
-        $(".time-and-place").last().append($("<div>").text(outboundInfo[i].destinationCode));
-        $(".time-and-place").last().append($("<div>").text(outboundInfo[i].destinationName));
-      }
-
-      $(".itinerary").last().append($("<div>").addClass("leg"));
-      $(".leg").last().append($("<div>").addClass("leg-content"));
-
-      for (let i = 0; i < inboundInfo.length; i++) {
-        $(".leg-content").last().append($("<div>").addClass("segment"));
-
-        $(".segment").last().append($("<img>", { src: inboundInfo[i].carrier.ImageUrl }).addClass("carrier"));
-
-        $(".segment").last().append($("<div>").addClass("time-and-place"));
-        $(".time-and-place").last().append($("<div>").text(dateFormatter(inboundInfo[i].departureDateTime)));
-        $(".time-and-place").last().append($("<div>").text(inboundInfo[i].originCode));
-        $(".time-and-place").last().append($("<div>").text(inboundInfo[i].originName));
-
-        $(".segment").last().append($("<i>").addClass("fas fa-angle-double-right rightward"));
-
-        $(".segment").last().append($("<div>").addClass("time-and-place"));
-        $(".time-and-place").last().append($("<div>").text(dateFormatter(inboundInfo[i].arrivalDateTime)));
-        $(".time-and-place").last().append($("<div>").text(inboundInfo[i].destinationCode));
-        $(".time-and-place").last().append($("<div>").text(inboundInfo[i].destinationName));
-      }
-    });
-  }
-};
-
 const dateFormatter = (value) => {
   const date = new Date(value);
   const options = { hour: "numeric", minute: "numeric", year: "numeric", month: "short", day: "numeric" };
@@ -348,4 +235,117 @@ $(() => {
       pollSessionResult(pollSessionResultSetting);
     });
   });
+
+  const pollSessionResult = (setting) => {
+    $.ajax(setting).done((response) => {
+      console.log(response.Status);
+      if (response.Status != "UpdatesComplete") {
+        setTimeout(() => {
+          pollSessionResult(setting);
+        }, 500);
+      } else {
+        console.log(response);
+        displayResult(response);
+      }
+    });
+  };
+
+  const displayResult = (response) => {
+    if (response.Itineraries.length === 0) {
+      console.log("no flight")
+    } else {
+      response.Itineraries.forEach((itinerary) => {
+        const minPrice = itinerary.PricingOptions[0].Price;
+
+        const outboundLeg = response.Legs.find((leg) => leg.Id === itinerary.OutboundLegId);
+        const outboundInfo = outboundLeg.SegmentIds.map((segmentId) => {
+          const segment = response.Segments.find((segment) => segment.Id === segmentId)
+          const origin = response.Places.find((place) => place.Id === segment.OriginStation);
+          const destination = response.Places.find((place) => place.Id === segment.DestinationStation);
+          const carrier = response.Carriers.find((carrier) => carrier.Id === segment.Carrier);
+          return ({
+            id: segmentId,
+            originId: origin.Id,
+            originCode: origin.Code,
+            originName: origin.Name,
+            departureDateTime: segment.DepartureDateTime,
+            destinationId: destination.Id,
+            destinationCode: destination.Code,
+            destinationName: destination.Name,
+            arrivalDateTime: segment.ArrivalDateTime,
+            carrier
+          });
+        });
+
+        outboundInfo.sort((a, b) => a.departureDateTime < b.departureDateTime ? -1 : 1);
+
+        const inboundLeg = response.Legs.find((leg) => leg.Id === itinerary.InboundLegId);
+        const inboundInfo = inboundLeg.SegmentIds.map((segmentId) => {
+          const segment = response.Segments.find((segment) => segment.Id === segmentId)
+          const origin = response.Places.find((place) => place.Id === segment.OriginStation);
+          const destination = response.Places.find((place) => place.Id === segment.DestinationStation);
+          const carrier = response.Carriers.find((carrier) => carrier.Id === segment.Carrier);
+          return ({
+            id: segmentId,
+            originId: origin.Id,
+            originCode: origin.Code,
+            originName: origin.Name,
+            departureDateTime: segment.DepartureDateTime,
+            destinationId: destination.Id,
+            destinationCode: destination.Code,
+            destinationName: destination.Name,
+            arrivalDateTime: segment.ArrivalDateTime,
+            carrier
+          });
+        });
+
+        inboundInfo.sort((a, b) => a.departureDateTime < b.departureDateTime ? -1 : 1);
+
+        $("#result").append($("<div>").addClass("itinerary"));
+        $(".itinerary").last().append($("<div>").text(`${minPrice} ${response.Query.Currency}`).addClass("price"));
+
+        $(".itinerary").last().append($("<div>").addClass("leg"));
+        $(".leg").last().append($("<div>").addClass("leg-content"));
+
+        for (let i = 0; i < outboundInfo.length; i++) {
+          $(".leg-content").last().append($("<div>").addClass("segment"));
+
+          $(".segment").last().append($("<img>", { src: outboundInfo[i].carrier.ImageUrl }).addClass("carrier"));
+
+          $(".segment").last().append($("<div>").addClass("time-and-place"));
+          $(".time-and-place").last().append($("<div>").text(dateFormatter(outboundInfo[i].departureDateTime)));
+          $(".time-and-place").last().append($("<div>").text(outboundInfo[i].originCode));
+          $(".time-and-place").last().append($("<div>").text(outboundInfo[i].originName));
+
+          $(".segment").last().append($("<i>").addClass("fas fa-angle-double-right rightward"));
+
+          $(".segment").last().append($("<div>").addClass("time-and-place"));
+          $(".time-and-place").last().append($("<div>").text(dateFormatter(outboundInfo[i].arrivalDateTime)));
+          $(".time-and-place").last().append($("<div>").text(outboundInfo[i].destinationCode));
+          $(".time-and-place").last().append($("<div>").text(outboundInfo[i].destinationName));
+        }
+
+        $(".itinerary").last().append($("<div>").addClass("leg"));
+        $(".leg").last().append($("<div>").addClass("leg-content"));
+
+        for (let i = 0; i < inboundInfo.length; i++) {
+          $(".leg-content").last().append($("<div>").addClass("segment"));
+
+          $(".segment").last().append($("<img>", { src: inboundInfo[i].carrier.ImageUrl }).addClass("carrier"));
+
+          $(".segment").last().append($("<div>").addClass("time-and-place"));
+          $(".time-and-place").last().append($("<div>").text(dateFormatter(inboundInfo[i].departureDateTime)));
+          $(".time-and-place").last().append($("<div>").text(inboundInfo[i].originCode));
+          $(".time-and-place").last().append($("<div>").text(inboundInfo[i].originName));
+
+          $(".segment").last().append($("<i>").addClass("fas fa-angle-double-right rightward"));
+
+          $(".segment").last().append($("<div>").addClass("time-and-place"));
+          $(".time-and-place").last().append($("<div>").text(dateFormatter(inboundInfo[i].arrivalDateTime)));
+          $(".time-and-place").last().append($("<div>").text(inboundInfo[i].destinationCode));
+          $(".time-and-place").last().append($("<div>").text(inboundInfo[i].destinationName));
+        }
+      });
+    }
+  };
 });
