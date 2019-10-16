@@ -214,14 +214,14 @@ main > .row > .container {
 }
 
 #inputForm label {
-  display: inline-block;
-  width: 100%;
+  display: block;
+  width: 90%;
 }
 
 .ui-autocomplete{
 	max-height: 200px;
 	overflow-x: hidden;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 .serch-button-row {

@@ -36,9 +36,11 @@
       <button class="close">&times;</button>
     </div>
     <div class="modal-body">
-      <p>Some text in the Modal Body</p>
-      <select name="countries" id="countries"></select>
-      <select name="currencies" id="currencies"></select>
+      <form id="regionalInfoForm">
+        <select name="countries" id="countries"></select>
+        <select name="currencies" id="currencies"></select>
+        <button id="save">Save</button>
+      </form>
     </div>
   </div>
 
@@ -87,7 +89,7 @@
           <input type="hidden" id="country">
           <input type="hidden" id="currency">
           <div class="serch-button-row">
-            <button id="serch" type="submit">search</button>
+            <button id="serch" type="submit">Search</button>
           </div>
         </form>
       </div>
