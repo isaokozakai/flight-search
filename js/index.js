@@ -21,8 +21,8 @@ $(() => {
     "url": "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/reference/v1.0/countries/en-US"
   }).done((response) => {
     response.Countries.sort((a, b) => a.Name < b.Name ? -1 : 1)
-      .forEach((countries) => {
-        $("#countries").append($("<option>", { label: countries.Name }).val(countries.Code));
+      .forEach((country) => {
+        $("#countries").append($("<option>", { label: country.Name }).val(country.Code));
       });
     // set a default value to the input for the server
     const defaultCountry = response.Countries.find((country) => country.Code == "US");
@@ -95,15 +95,13 @@ $(() => {
 
   // place a balloon for travelers
   const posision = $travelersField.offset();
-  $travelersBalloon.css({ top: posision.top + 37, left: posision.left });
+  $travelersBalloon.css({ top: posision.top + 43, left: posision.left });
 
   $travelersField.on("click touchstart", (e) => {
     $travelersBalloon.toggle();
   });
 
-
   $regionalInfoBtn.on("click touchstart", (e) => {
-    $regionalInfoBtn.css({ outline: "none" });
     $modalBackground.css({ display: "block" });
     $modal.css({ display: "block" });
   });
@@ -145,9 +143,9 @@ $(() => {
     const value = parseInt($inputField.val());
 
     if ((($inputField.attr("id") == "adults") && value == 2) || value == 1) {
-      $(this).prop("disabled", true);
+      $(this).attr("disabled", true);
     } else {
-      $plusButton.prop("disabled", false);
+      $plusButton.attr("disabled", false);
     }
     $inputField.val(value - 1);
 

@@ -188,7 +188,8 @@ main > .row > .container {
   color: green;
 }
 
-.balloon .number-selection button:active, .balloon .number-selection button:focus {
+.balloon .number-selection button:active,
+.balloon .number-selection button:focus {
   outline: none;
 }
 
