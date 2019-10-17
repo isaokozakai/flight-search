@@ -253,7 +253,7 @@ $(() => {
       console.log("no flight")
     } else {
       response.Itineraries.forEach((itinerary) => {
-        const minPrice = itinerary.PricingOptions[0].Price;
+        const minPrice = Math.round(itinerary.PricingOptions[0].Price);
 
         const outboundLeg = response.Legs.find((leg) => leg.Id === itinerary.OutboundLegId);
         const outboundInfo = outboundLeg.SegmentIds.map((segmentId) => {

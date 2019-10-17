@@ -95,14 +95,14 @@
   #inputForm .travelers {
     width: 200px;
   }
-  
+/* 
   .itinerary {
   }
-  
+*/
   .itinerary .price {
+    font-size: 19px;
   }
-  
-  
+
   .itinerary .leg {
     flex-direction: row;
     flex-wrap: wrap;
@@ -120,6 +120,8 @@
   
   .itinerary .leg .time-and-place {
     margin: 0 10px;
+    font-size: 17px;
+    line-height: 20px;
   }
   
   .itinerary .leg .direction {

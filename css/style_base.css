@@ -39,9 +39,9 @@ body {
   right: 0;
   bottom: 0;
   background-color: #fefefe;
-  margin: 90px auto;
+  margin: 70px auto;
   min-height: 300px;
-  width: 400px;
+  width: 300px;
   border-radius: 5px;
 }
 
@@ -260,17 +260,17 @@ button#serch:focus {
   padding: 10px 10px 5px;
   margin-bottom: 10px;
   border-radius: 5px;
-  font-size: 17px;
+  font-size: 20px;
 }
 
 .itinerary .price {
   border-radius: 3px;
-  text-align: right;
+  text-align: center;
   padding: 0 10px;
   margin-bottom: 5px;
   height: 30px;
   line-height: 30px;
-  width: 100px;
+  width: 90px;
   background-color: white;
 }
 
@@ -303,7 +303,7 @@ button#serch:focus {
 
 .itinerary .leg .time-and-place {
   margin: auto;
-  line-height: 20px;
+  line-height: 25px;
   text-align: center;
 }
 
