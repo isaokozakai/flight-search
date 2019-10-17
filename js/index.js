@@ -303,11 +303,9 @@ $(() => {
         $(".itinerary").last().append($("<div>").text(`${minPrice} ${response.Query.Currency}`).addClass("price"));
 
         $(".itinerary").last().append($("<div>").addClass("leg"));
-        $(".leg").last().append($("<div>").addClass("leg-content"));
 
         for (let i = 0; i < outboundInfo.length; i++) {
-          $(".leg-content").last().append($("<div>").addClass("segment"));
-
+          $(".leg").last().append($("<div>").addClass("segment"));
           $(".segment").last().append($("<img>", { src: outboundInfo[i].carrier.ImageUrl }).addClass("carrier"));
 
           $(".segment").last().append($("<div>").addClass("time-and-place"));
@@ -315,7 +313,7 @@ $(() => {
           $(".time-and-place").last().append($("<div>").text(outboundInfo[i].originCode));
           $(".time-and-place").last().append($("<div>").text(outboundInfo[i].originName));
 
-          $(".segment").last().append($("<i>").addClass("fas fa-angle-double-right rightward"));
+          $(".segment").last().append($("<i>").addClass("fas fa-angle-double-down direction"));
 
           $(".segment").last().append($("<div>").addClass("time-and-place"));
           $(".time-and-place").last().append($("<div>").text(dateFormatter(outboundInfo[i].arrivalDateTime)));
@@ -324,11 +322,9 @@ $(() => {
         }
 
         $(".itinerary").last().append($("<div>").addClass("leg"));
-        $(".leg").last().append($("<div>").addClass("leg-content"));
 
         for (let i = 0; i < inboundInfo.length; i++) {
-          $(".leg-content").last().append($("<div>").addClass("segment"));
-
+          $(".leg").last().append($("<div>").addClass("segment"));
           $(".segment").last().append($("<img>", { src: inboundInfo[i].carrier.ImageUrl }).addClass("carrier"));
 
           $(".segment").last().append($("<div>").addClass("time-and-place"));
@@ -336,7 +332,7 @@ $(() => {
           $(".time-and-place").last().append($("<div>").text(inboundInfo[i].originCode));
           $(".time-and-place").last().append($("<div>").text(inboundInfo[i].originName));
 
-          $(".segment").last().append($("<i>").addClass("fas fa-angle-double-right rightward"));
+          $(".segment").last().append($("<i>").addClass("fas fa-angle-double-down direction"));
 
           $(".segment").last().append($("<div>").addClass("time-and-place"));
           $(".time-and-place").last().append($("<div>").text(dateFormatter(inboundInfo[i].arrivalDateTime)));
