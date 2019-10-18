@@ -15,6 +15,7 @@ const dateFormatter = (value) => {
 };
 
 $(() => {
+  const $regionalInfoBtn = $("#regionalInfo");
   // create a dropdown for countries
   $.ajax({
     ...commonSetting,
@@ -27,6 +28,7 @@ $(() => {
     // set a default value to the input for the server
     const defaultCountry = response.Countries.find((country) => country.Code == "US");
     $("#country").val(defaultCountry.Code);
+    $regionalInfoBtn.prepend($("<span>").text(defaultCountry.Name));
   });
 
   // create a dropdown for currencies
@@ -41,9 +43,12 @@ $(() => {
     // set a default value to the input for the server
     const defaultCurrency = response.Currencies.find((currency) => currency.Code == "USD");
     $("#currency").val(defaultCurrency.Code);
+    console.log($("#regionalInfo").children("span"))
+    $regionalInfoBtn.append($("<span>").text(defaultCurrency.Code));
   });
 
-  $("#regionalInfo").on("click touchstart", ((e) => {
+  $regionalInfoBtn.on("click touchstart", ((e) => {
+    $regionalInfoBtn.blur();
     $("#countries").val($("#country").val());
     $("#currencies").val($("#currency").val());
   }));
@@ -87,7 +92,6 @@ $(() => {
     }
   });
 
-  const $regionalInfoBtn = $("#regionalInfo");
   const $modalBackground = $(".modal-overlay");
   const $modal = $(".modal");
   const $travelersField = $("#travelers");

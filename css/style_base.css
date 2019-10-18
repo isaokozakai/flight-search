@@ -86,18 +86,43 @@ header {
   background-color: brown;
 }
 
+header .container {
+  padding: 15px 25px;
+}
+
+header .row {
+  flex-direction: column;
+}
+
 header h1 {
   margin: 0;
 }
 
 header button {
-  color: black;
+  display: flex;
+  color: white;
+  font-size: 18px;
   height: auto;
-  width: 80px;
-  background-color: white;
-  border: 2px solid #888;
+  background-color: transparent;
+  border: 2px solid #999;
   border-radius: 5px;
   cursor: pointer;
+  padding: 5px 10px;
+  margin: 10px auto 0 10px;
+}
+
+header button span:first-child {
+  margin-right: 10px;
+}
+
+header button:hover {
+  border: 2px solid #60b1f3;
+}
+
+button#serch:active,
+button#serch:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px #66b0ff;
 }
 
 main {
