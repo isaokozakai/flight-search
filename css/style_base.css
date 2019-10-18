@@ -24,6 +24,7 @@ label {
 
 button {
   cursor: pointer;
+  box-shadow: 0 0 0 2px transparent;
 }
 
 button:active,
