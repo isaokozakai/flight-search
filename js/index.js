@@ -23,12 +23,12 @@ $(() => {
   }).done((response) => {
     response.Countries.sort((a, b) => a.Name < b.Name ? -1 : 1)
       .forEach((country) => {
-        $("#countries").append($("<option>", { label: country.Name }).val(country.Code));
+        $("#countries").append($("<option>", { label: country.Name }).val(country.Code).text(country.Name));
       });
     // set a default value to the input for the server
     const defaultCountry = response.Countries.find((country) => country.Code == "US");
     $("#country").val(defaultCountry.Code);
-    $regionalInfoBtn.prepend($("<span>").text(defaultCountry.Name));
+    $("#currentCountry").text(defaultCountry.Name);
   });
 
   // create a dropdown for currencies
@@ -43,8 +43,7 @@ $(() => {
     // set a default value to the input for the server
     const defaultCurrency = response.Currencies.find((currency) => currency.Code == "USD");
     $("#currency").val(defaultCurrency.Code);
-    console.log($("#regionalInfo").children("span"))
-    $regionalInfoBtn.append($("<span>").text(defaultCurrency.Code));
+    $("#currentCurrency").text(defaultCurrency.Code);
   });
 
   $regionalInfoBtn.on("click touchstart", ((e) => {
@@ -57,6 +56,8 @@ $(() => {
     e.preventDefault();
     $("#country").val(e.target.countries.value);
     $("#currency").val(e.target.currencies.value);
+    $("#currentCountry").text(e.target.countries.selectedOptions[0].label);
+    $("#currentCurrency").text(e.target.currencies.value);
     $modalBackground.css({ display: "none" });
     $modal.css({ display: "none" });
   });
@@ -123,7 +124,7 @@ $(() => {
     }
   });
 
-  $(".close").click((e) => {
+  $(".close, #cancel").click((e) => {
     $modalBackground.css({ display: "none" });
     $modal.css({ display: "none" });
   })

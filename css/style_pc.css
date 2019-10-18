@@ -1,91 +1,19 @@
 @media (min-width: 600px) {
-  .container {
+  .container,
+  header .container {
     padding: 20px 90px;
-  }
-  
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    background-color: rgba(0,0,0,0.4);
-  }
-  
+  }  
+
   .modal {
-    display: none;
-    position: absolute;
-    z-index: 2;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #fefefe;
     margin: 90px auto;
-    min-height: 300px;
     width: 400px;
-    border-radius: 5px;
   }
-  
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
-    color: black;
-    padding: 12px;
-    border-bottom: 1px solid #e9ecef;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-  }
-  
-  .modal-header h2 {
-    margin: 0;
-    font-size: 20px;
-  }
-  
-  .modal-body {
-    padding: 2px 16px;
-  }
-  
-  .close {
-    border: none;
-    background-color: transparent;
-    color: #555;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  
-  header {
-    color: white;
-    background-color: brown;
-  }
+
 
   header .row {
     flex-direction: row;
   }
-  
-  header h1 {
-    margin: 0;
-  }
-  
+
   header button {
     width: auto;
     margin: 0;
@@ -100,10 +28,7 @@
   #inputForm .travelers {
     width: 200px;
   }
-/* 
-  .itinerary {
-  }
-*/
+
   .itinerary .price {
     font-size: 19px;
   }

@@ -25,6 +25,8 @@
       <div class="row">
         <h1>Flight Search</h1>
         <button name="regionalInfo" id="regionalInfo">
+            <div id="currentCountry"></div>
+            <div id="currentCurrency"></div>
         </button>
       </div>
     </div>
@@ -39,9 +41,19 @@
     </div>
     <div class="modal-body">
       <form id="regionalInfoForm">
-        <select name="countries" id="countries"></select>
-        <select name="currencies" id="currencies"></select>
-        <button id="save">Save</button>
+        <div class="modal-container">
+          <label for="countries">Country / Region</label>
+          <p>Selecting the country you’re in will give you local deals and information.</p>
+          <select name="countries" id="countries"></select>
+        </div>
+        <div class="modal-container">
+            <label for="currencies">Currency</label>
+          <select name="currencies" id="currencies"></select>
+        </div>
+        <div class="modal-button-container">
+          <button id="save" type="submit">Save</button>
+          <button id="cancel" type="button">Cancel</button>
+        </div>
       </form>
     </div>
   </div>
