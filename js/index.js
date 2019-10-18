@@ -148,9 +148,9 @@ $(() => {
     const value = parseInt($inputField.val());
 
     if ((($inputField.attr("id") == "adults") && value == 2) || value == 1) {
-      $(this).attr("disabled", true);
+      $(this).prop("disabled", true);
     } else {
-      $plusButton.attr("disabled", false);
+      $plusButton.prop("disabled", false);
     }
     $inputField.val(value - 1);
 
