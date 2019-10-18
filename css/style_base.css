@@ -197,7 +197,7 @@ main {
   padding-top: 10px;
 }
 
-main > .row > .container {
+main > .row > .container:first-child {
   max-width: 80vw;
 }
 

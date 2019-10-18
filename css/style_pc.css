@@ -9,7 +9,6 @@
     width: 400px;
   }
 
-
   header .row {
     flex-direction: row;
   }
@@ -18,9 +17,22 @@
     width: auto;
     margin: 0;
   }
+
   
+  main > .row {
+    justify-content: flex-start;
+  }
+
+  main > .row > .container:first-child {
+    max-width: 80%;
+    box-sizing: border-box;
+    padding-right: 70px;
+  }
+
   main .right {
     display: block;
+    max-width: 20%;
+    box-sizing: border-box;
   }
   
   #inputForm .date,
