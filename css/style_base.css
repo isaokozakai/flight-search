@@ -57,7 +57,8 @@ button:focus {
   background-color: #fefefe;
   margin: 70px auto;
   min-height: 370px;
-  width: 360px;
+  height: 370px;
+  width: 350px;
   border-radius: 5px;
 }
 
