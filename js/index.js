@@ -15,6 +15,7 @@ const dateFormatter = (value) => {
 };
 
 $(() => {
+  let isLoading = false;
   const $regionalInfoBtn = $("#regionalInfo");
   // create a dropdown for countries
   $.ajax({
@@ -58,7 +59,7 @@ $(() => {
     $("#currency").val(e.target.currencies.value);
     $("#currentCountry").text(e.target.countries.selectedOptions[0].label);
     $("#currentCurrency").text(e.target.currencies.value);
-    $modalBackground.css({ display: "none" });
+    $overlay.css({ display: "none" });
     $modal.css({ display: "none" });
   });
 
@@ -93,7 +94,7 @@ $(() => {
     }
   });
 
-  const $modalBackground = $(".modal-overlay");
+  const $overlay = $(".overlay");
   const $modal = $(".modal");
   const $travelersField = $("#travelers");
   const $travelersBalloon = $("#travelers-balloon");
@@ -107,7 +108,7 @@ $(() => {
   });
 
   $regionalInfoBtn.on("click touchstart", (e) => {
-    $modalBackground.css({ display: "block" });
+    $overlay.css({ display: "block" });
     $modal.css({ display: "block" });
   });
 
@@ -118,14 +119,14 @@ $(() => {
     ) {
       $travelersBalloon.css({ display: "none" });
     }
-    if ($(e.target).is($modalBackground)) {
-      $modalBackground.css({ display: "none" });
+    if (!isLoading && $(e.target).is($overlay)) {
+      $overlay.css({ display: "none" });
       $modal.css({ display: "none" });
     }
   });
 
   $(".close, #cancel").click((e) => {
-    $modalBackground.css({ display: "none" });
+    $overlay.css({ display: "none" });
     $modal.css({ display: "none" });
   })
 
@@ -213,11 +214,17 @@ $(() => {
       }
     };
 
+    $overlay.css({ display: "block" });
+    $("#loading").addClass("loading");
+    isLoading = true;
+
     $.ajax(createSessionSetting).done((response) => {
       console.log("done for Create session", response);
 
     }).fail((jqXHR, textStatus, errorThrown) => {
       console.log("fail for Create session", jqXHR, textStatus, errorThrown);
+      $("#loading").removeClass("loading");
+      $overlay.css({ display: "none" });
 
     }).always((data, textStatus, jqXHR) => {
       console.log("always for Create session", data, textStatus, jqXHR);
@@ -248,8 +255,15 @@ $(() => {
         }, 500);
       } else {
         console.log(response);
+        isLoading = false;
+        $("#loading").removeClass("loading");
+        $overlay.css({ display: "none" });
         displayResult(response);
       }
+    }).fail((jqXHR, textStatus, errorThrown) => {
+      console.log("fail for Create session", jqXHR, textStatus, errorThrown);
+      $("#loading").removeClass("loading");
+      $overlay.css({ display: "none" });
     });
   };
 

@@ -4,6 +4,19 @@
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+#loading {
+  display: none;
+}
+
+#loading.loading {
+  display: block;
+  min-height: 100vh;
+  width: 100%;
+  z-index: 1;
+  position: fixed;
+  background: url(../images/loading.gif) center center no-repeat;
+}
+
 .container {
   padding: 20px 40px;
   max-width: 100vw;
@@ -30,7 +43,7 @@ button:focus {
   box-shadow: 0 0 0 2px #66b0ff;
 }
 
-.modal-overlay {
+.overlay {
   display: none;
   position: fixed;
   top: 0;
@@ -39,14 +52,14 @@ button:focus {
   bottom: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 2;
   background-color: rgba(0,0,0,0.4);
 }
 
 .modal {
   display: none;
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   top: 0;
   left: 0;
   right: 0;
