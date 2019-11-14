@@ -57,7 +57,7 @@
   }
   
   .itinerary .leg .carrier {
-    margin: auto 10px auto 0;
+    margin: auto;
   }
   
   .itinerary .leg .time-and-place {
