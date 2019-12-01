@@ -47,7 +47,7 @@ $(() => {
     $("#currentCurrency").text(defaultCurrency.Code);
   });
 
-  $regionalInfoBtn.on("click touchstart", ((e) => {
+  $regionalInfoBtn.on("click", ((e) => {
     $regionalInfoBtn.blur();
     $("#countries").val($("#country").val());
     $("#currencies").val($("#currency").val());
@@ -103,16 +103,16 @@ $(() => {
   const posision = $travelersField.offset();
   $travelersBalloon.css({ top: posision.top + 43, left: posision.left });
 
-  $travelersField.on("click touchstart", (e) => {
+  $travelersField.on("click", (e) => {
     $travelersBalloon.toggle();
   });
 
-  $regionalInfoBtn.on("click touchstart", (e) => {
+  $regionalInfoBtn.on("click", (e) => {
     $overlay.css({ display: "block" });
     $modal.css({ display: "block" });
   });
 
-  $(document).on("click touchstart", (e) => {
+  $(document).on("click", (e) => {
     if (
       $travelersBalloon.css("display") == "block"
       && !($(e.target).is($travelersField) || $(e.target).closest($travelersBalloon)[0])
@@ -177,6 +177,7 @@ $(() => {
 
   $("#inputForm").submit((e) => {
     e.preventDefault();
+    if ($overlay.css("display") == "block") return;
     $("#result").empty();
     const inputItems = e.target.elements;
     const originPlace = inputItems.from.attributes.code.value;
