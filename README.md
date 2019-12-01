@@ -13,3 +13,5 @@ This is a website where you can search flight tickets, we are using the Skyscann
  - HTML5
  - CSS3
  - jQuery
+ - Ajax
+ - Skyscanner Flight Search API
