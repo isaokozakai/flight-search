@@ -10,6 +10,6 @@ This is a website where you can search flight tickets, we are using the Skyscann
  - The fields for the country and currency allow to select from values that is fetched from the Skyscanner API.
  
  ## Technologies
-HTML5<br/>
-CSS3<br/>
-jQuery<br/>
+ - HTML5
+ - CSS3
+ - jQuery
