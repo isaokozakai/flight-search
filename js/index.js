@@ -220,15 +220,15 @@ $(() => {
     isLoading = true;
 
     $.ajax(createSessionSetting).done((response) => {
-      console.log("done for Create session", response);
+      console.log("done for Create Session", response);
 
     }).fail((jqXHR, textStatus, errorThrown) => {
-      console.log("fail for Create session", jqXHR, textStatus, errorThrown);
+      console.log("fail for Create Session", jqXHR, textStatus, errorThrown);
       $("#loading").removeClass("loading");
       $overlay.css({ display: "none" });
 
     }).always((data, textStatus, jqXHR) => {
-      console.log("always for Create session", data, textStatus, jqXHR);
+      console.log("always for Create Session", data, textStatus, jqXHR);
 
       const sessionkey = jqXHR.getResponseHeader("location").slice(-36);
       const pollSessionResultSetting = {
@@ -262,7 +262,7 @@ $(() => {
         displayResult(response);
       }
     }).fail((jqXHR, textStatus, errorThrown) => {
-      console.log("fail for Create session", jqXHR, textStatus, errorThrown);
+      console.log("fail for Poll Session Result", jqXHR, textStatus, errorThrown);
       $("#loading").removeClass("loading");
       $overlay.css({ display: "none" });
     });
