@@ -4,7 +4,7 @@ const commonSetting = {
   "method": "GET",
   "headers": {
     "x-rapidapi-host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-    "x-rapidapi-key": "9e17e55ef7msh7b448d0f0cae1b2p13d1cfjsn95340acc8e72"
+    "x-rapidapi-key": "291983d532msh0eec23d597e9db4p194141jsn9c04ac451d6e"
   }
 };
 
