@@ -249,8 +249,8 @@ main .right {
 }
 
 .balloon {
-	position: absolute;
-	width: 170px;
+  position: absolute;
+  width: 170px;
   height: auto;
   background-color: white;
   padding: 10px 15px;
