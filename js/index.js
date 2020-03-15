@@ -270,7 +270,9 @@ $(() => {
 
   const displayResult = (response) => {
     if (response.Itineraries.length === 0) {
-      console.log("no flight")
+      console.log("no flight");
+
+      $("#result").append($("<div>").text("Sorry, we found no results matching your search").addClass("no-flight"));
     } else {
       response.Itineraries.forEach((itinerary) => {
         const minPrice = Math.round(itinerary.PricingOptions[0].Price);
