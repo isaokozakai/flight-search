@@ -47,12 +47,6 @@ $(() => {
     $("#currentCurrency").text(defaultCurrency.Code);
   });
 
-  $regionalInfoBtn.on("click", ((e) => {
-    $regionalInfoBtn.blur();
-    $("#countries").val($("#country").val());
-    $("#currencies").val($("#currency").val());
-  }));
-
   $("#regionalInfoForm").submit((e) => {
     e.preventDefault();
     $("#country").val(e.target.countries.value);
@@ -108,6 +102,9 @@ $(() => {
   });
 
   $regionalInfoBtn.on("click", (e) => {
+    $regionalInfoBtn.blur();
+    $("#countries").val($("#country").val());
+    $("#currencies").val($("#currency").val());
     $overlay.css({ display: "block" });
     $modal.css({ display: "block" });
   });
